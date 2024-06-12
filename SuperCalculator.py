@@ -30,42 +30,51 @@ first_number = ''
 operator = ''
 second_number = ''
 
+# Print on screen
 def print_screen(canvas, screen_text, value):
     canvas.itemconfig(screen_text, text=value)
 
-
-# On button click function
+# Operations function
 def on_button_click(canvas, value, screen_text):
     global first_number
     global second_number
     global operator
 
+    # Assign first number, if operator is ''
     if operator == '' and value in '0123456789.':
         if len(first_number) <= 6:
+            # Do not allow first number to be 0
             if first_number == '' and value == '0':
                 print_screen(canvas, screen_text, first_number)
+            # Do not allow more than one '.'
             elif value == '.' and '.' in first_number:
                 print_screen(canvas, screen_text, first_number)
             else:                    
                 first_number += value
                 print_screen(canvas, screen_text, first_number)
+    # Clear screen and variables on double '='
     elif value == '=' and operator == '=':
         print_screen(canvas, screen_text, '')
         operator = ''
         first_number = ''
         second_number = ''
+    # If first number is provided, set operator
     elif value in '+-/*':
         operator = value
         print_screen(canvas, screen_text, operator)
+    # Assign second number, if operator is provided
     elif operator in '+-/*' and value in '0123456789.':
         if len(second_number) <= 6:
+            # Do not allow first number to be 0
             if second_number == '' and value == '0':
                 print_screen(canvas, screen_text, second_number)
+            # Do not allow more than one '.'
             elif value == '.' and '.' in second_number:
                 print_screen(canvas, screen_text, second_number)
             else:                    
                 second_number += value
                 print_screen(canvas, screen_text, second_number)
+    # Calcualte result if '=' is clicked, and all three variables are provided
     elif value == '=':
         first = float(first_number)
         second = float(second_number)
