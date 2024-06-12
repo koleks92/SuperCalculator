@@ -4,7 +4,8 @@ import tkinter as tk
 WIDTH = 300
 HEIGHT = 500
 PADDING = 1
-FONT = ("Helvetica", 18)
+FONT = ("Time", 18)
+FONT_SCREEN = ("Time", 18)
 
 # Create a button
 def create_button(root, value, canvas, screen_text):
@@ -24,10 +25,63 @@ def draw_one_row(root, v1, v2, v3, v4, row, canvas, screen_text):
     button4 = create_button(root, v4, canvas, screen_text)
     button4.grid(row=row, column=3, padx=PADDING, pady=PADDING, sticky="nsew")
 
-# On button click function
-def on_button_click(canvas, value, screen_text):
+# Numbers, operator
+first_number = ''
+operator = ''
+second_number = ''
+
+def print_screen(canvas, screen_text, value):
     canvas.itemconfig(screen_text, text=value)
 
+
+# On button click function
+def on_button_click(canvas, value, screen_text):
+    global first_number
+    global second_number
+    global operator
+
+    if operator == '' and value in '0123456789.':
+        if len(first_number) <= 6:
+            if first_number == '' and value == '0':
+                print_screen(canvas, screen_text, first_number)
+            elif value == '.' and '.' in first_number:
+                print_screen(canvas, screen_text, first_number)
+            else:                    
+                first_number += value
+                print_screen(canvas, screen_text, first_number)
+    elif value == '=' and operator == '=':
+        print_screen(canvas, screen_text, '')
+        operator = ''
+        first_number = ''
+        second_number = ''
+    elif value in '+-/*':
+        operator = value
+        print_screen(canvas, screen_text, operator)
+    elif operator in '+-/*' and value in '0123456789.':
+        if len(second_number) <= 6:
+            if second_number == '' and value == '0':
+                print_screen(canvas, screen_text, second_number)
+            elif value == '.' and '.' in second_number:
+                print_screen(canvas, screen_text, second_number)
+            else:                    
+                second_number += value
+                print_screen(canvas, screen_text, second_number)
+    elif value == '=':
+        first = float(first_number)
+        second = float(second_number)
+        
+        if operator == '+':
+            print_screen(canvas, screen_text, (first + second))
+        elif operator == '-':
+            print_screen(canvas, screen_text, (first - second))
+        elif operator == '/':
+            print_screen(canvas, screen_text, (first / second))
+        elif operator == '*':
+            print_screen(canvas, screen_text, (first * second))
+
+        operator = '='
+
+        
 # Main function
 def main():
     # Create main window
@@ -42,19 +96,19 @@ def main():
         root.grid_rowconfigure(i, weight=1)
 
     # Create a canvas
-    canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT / 5)
+    canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT / 8)
     canvas.grid(row=0, column=0, columnspan=4, sticky="s")
 
     # Create screen
-    screen = canvas.create_rectangle(2,2, WIDTH, HEIGHT / 5, fill='gray')
-    screen_text = canvas.create_text(50,50, text=0, font=FONT)
+    screen = canvas.create_rectangle(2,2, WIDTH, HEIGHT / 8, fill='black')
+    screen_text = canvas.create_text(10, HEIGHT / 14, text='', font=FONT_SCREEN, fill="white", anchor="w")
     
 
     # Draw all buttons
-    draw_one_row(root, 1, 2, 3, "+", 1, canvas, screen_text)
-    draw_one_row(root, 4, 5, 6, "-", 2, canvas, screen_text)
-    draw_one_row(root, 7, 8, 9, "/", 3, canvas, screen_text)
-    draw_one_row(root, 0, ".", "=", "*", 4, canvas, screen_text)
+    draw_one_row(root, "1", "2", "3", "+", 1, canvas, screen_text)
+    draw_one_row(root, "4", "5", "6", "-", 2, canvas, screen_text)
+    draw_one_row(root, "7", "8", "9", "/", 3, canvas, screen_text)
+    draw_one_row(root, "0", ".", "=", "*", 4, canvas, screen_text)
 
     # Run graphics
     root.mainloop()
