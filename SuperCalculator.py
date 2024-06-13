@@ -127,9 +127,9 @@ def on_button_click(canvas, value, screen_text):
         second = float(second_number)
         
         if operator == '+':
-            print_screen(canvas, screen_text, (first + second))
+            print_screen(canvas, screen_text, round((first + second), 6))
         elif operator == '-':
-            print_screen(canvas, screen_text, (first - second))
+            print_screen(canvas, screen_text, round((first - second), 6))
         elif operator == '/':
             print_screen(canvas, screen_text, round((first / second), 6))
         elif operator == '*':
