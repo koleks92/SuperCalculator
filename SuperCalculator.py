@@ -5,7 +5,7 @@ WIDTH = 300
 HEIGHT = 500
 PADDING = 1
 FONT = ("Time", 18)
-FONT_SCREEN = ("Time", 20)
+FONT_SCREEN = ("Time", 18)
 
 # Create a button
 def create_button(root, value, canvas, screen_text):
@@ -75,7 +75,7 @@ def on_button_click(canvas, value, screen_text):
                 second_number += value
                 print_screen(canvas, screen_text, second_number)
     # Calcualte result if '=' is clicked, and all three variables are provided
-    elif value == '=':
+    elif value == '=' and first_number != '' and second_number != '':
         first = float(first_number)
         second = float(second_number)
         
