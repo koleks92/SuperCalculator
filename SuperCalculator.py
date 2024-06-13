@@ -4,8 +4,7 @@ import tkinter as tk
 WIDTH = 300
 HEIGHT = 500
 PADDING = 1
-FONT = ("Time", 18)
-FONT_SCREEN = ("Time", 18)
+FONT = ("Digital-7", 18)
 
 # Create a button
 def create_button(root, value, canvas, screen_text):
@@ -42,7 +41,7 @@ def on_button_click(canvas, value, screen_text):
 
     # Assign first number, if operator is ''
     if operator == '' and value in '0123456789.':
-        if len(first_number) <= 6:
+        if len(first_number) <= 9:
             # Do not allow first number to be 0
             if first_number == '' and value == '0':
                 print_screen(canvas, screen_text, first_number)
@@ -64,7 +63,7 @@ def on_button_click(canvas, value, screen_text):
         print_screen(canvas, screen_text, operator)
     # Assign second number, if operator is provided
     elif operator in '+-/*' and value in '0123456789.':
-        if len(second_number) <= 6:
+        if len(second_number) <= 9:
             # Do not allow first number to be 0
             if second_number == '' and value == '0':
                 print_screen(canvas, screen_text, second_number)
@@ -110,7 +109,7 @@ def main():
 
     # Create screen
     screen = canvas.create_rectangle(2,2, WIDTH, HEIGHT / 8, fill='black')
-    screen_text = canvas.create_text(10, HEIGHT / 14, text='', font=FONT_SCREEN, fill="white", anchor="w")
+    screen_text = canvas.create_text(10, HEIGHT / 14, text='', font=FONT, fill="white", anchor="w")
     
 
     # Draw all buttons
