@@ -147,6 +147,7 @@ def main():
     # Create main window
     root = tk.Tk()
     root.title("SuperCalculator")
+    root.resizable(False, False)
 
     # Create a menu bar
     menu_bar = tk.Menu(root)
